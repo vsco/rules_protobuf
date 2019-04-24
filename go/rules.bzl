@@ -66,6 +66,8 @@ def go_proto_library(
     deps = [],
     go_proto_deps = [],
     verbose = 0,
+    visibility = None,
+
     **kwargs):
 
   resolved_go_proto_deps = [] + go_proto_deps
@@ -110,4 +112,5 @@ def go_proto_library(
     srcs = srcs + [name + ".pb"],
     deps = depset(deps + proto_deps + resolved_go_proto_deps).to_list(),
     importpath = importpath,
+    visibility = visibility,
     **kwargs)
