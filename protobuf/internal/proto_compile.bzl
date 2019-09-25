@@ -472,10 +472,10 @@ def _compile(ctx, unit):
   protoc_cmd = [protoc] + list(unit.args) + imports + srcs
   manifest = [f.short_path for f in unit.outputs]
 
-  transitive_units = depset()
-  for u in unit.data.transitive_units:
-    transitive_units = transitive_units | u.inputs
-  inputs = list(unit.inputs | transitive_units) + [unit.compiler]
+  transitive_units = depset(transitive = [u.inputs for u in unit.data.transitive_units])
+  compiler_dep = depset(direct = [unit.compiler])
+
+  inputs = depset(direct = list(unit.inputs), transitive = [transitive_units, compiler_dep])
   outputs = list(unit.outputs)
 
   cmds = [cmd for cmd in unit.commands] + [" ".join(protoc_cmd)]

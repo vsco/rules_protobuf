@@ -1,6 +1,6 @@
 dist: trusty
 sudo: required
-osx_image: xcode8
+osx_image: xcode10.3
 language: java
 
 os:
@@ -8,7 +8,7 @@ os:
   - osx
 
 env:
-  - V=0.26.1
+  - V=0.29.1
 
 before_install:
   - OS=linux
