@@ -43,7 +43,7 @@ def _emit_params_file_action(ctx, path, mnemonic, cmds):
     (File): an executable file that runs the command set.
   """
   filename = "%s.%sFile.params" % (path, mnemonic)
-  f = ctx.new_file(ctx.configuration.bin_dir, filename)
+  f = ctx.actions.declare_file(ctx.configuration.bin_dir, filename)
   ctx.file_action(output = f,
                   content = "\n".join(["set -e"] + cmds),
                   executable = True)
@@ -144,7 +144,7 @@ def _build_output_jar(run, builder):
   ctx = run.ctx
   execdir = run.data.execdir
   name = run.lang.name
-  protojar = ctx.new_file("%s_%s.jar" % (run.data.label.name, name))
+  protojar = ctx.actions.declare_file("%s_%s.jar" % (run.data.label.name, name))
   builder["outputs"] += [protojar]
   builder[name + "_jar"] = protojar
   builder[name + "_outdir"] = _get_offset_path(execdir, protojar.path)
@@ -155,7 +155,7 @@ def _build_output_library(run, builder):
   ctx = run.ctx
   execdir = run.data.execdir
   name = run.lang.name
-  jslib = ctx.new_file(run.data.label.name + run.lang.pb_file_extensions[0])
+  jslib = ctx.actions.declare_file(run.data.label.name + run.lang.pb_file_extensions[0])
   builder["jslib"] = [jslib]
   builder["outputs"] += [jslib]
 
@@ -172,8 +172,8 @@ def _build_output_srcjar(run, builder):
   name = run.lang.name
   protojar = builder[name + "_jar"]
   srcjar_name = "%s_%s.srcjar" % (run.data.label.name, name)
-  srcjar = ctx.new_file("%s_%s.srcjar" % (run.data.label.name, name))
-  ctx.action(
+  srcjar = ctx.actions.declare_file("%s_%s.srcjar" % (run.data.label.name, name))
+  ctx.actions.run_shell(
     mnemonic = "CpJarToSrcJar",
     inputs = [protojar],
     outputs = [srcjar],
@@ -216,7 +216,7 @@ def _build_output_files(run, builder):
     for ext in exts:
       temppath = list(path)
       temppath.append(base + ext)
-      pbfile = ctx.new_file("/".join(temppath))
+      pbfile = ctx.actions.declare_file("/".join(temppath))
       builder["outputs"] += [pbfile]
 
     for pb_output in run.pb_outputs:
@@ -224,7 +224,7 @@ def _build_output_files(run, builder):
 
       temppath = list(path)
       temppath.append(pb_output)
-      pbfile = ctx.new_file("/".join(temppath))
+      pbfile = ctx.actions.declare_file("/".join(temppath))
       builder["outputs"] += [pbfile]
 
 
@@ -524,7 +524,7 @@ cd $(bazel info execution_root)%s && \
   if unit.data.verbose > 3:
     cmds += ["find ../../"]
 
-  ctx.action(
+  ctx.actions.run_shell(
     mnemonic = "ProtoCompile",
     command = " && ".join(cmds),
     inputs = inputs,

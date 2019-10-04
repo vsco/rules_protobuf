@@ -1,4 +1,3 @@
-build --incompatible_new_actions_api=false
 build --incompatible_no_support_tools_in_action_inputs=false
 
 build --incompatible_strict_action_env

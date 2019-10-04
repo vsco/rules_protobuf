@@ -100,7 +100,7 @@ def _proto_dependencies_impl(ctx):
     files = [];
 
     if (ctx.attr.format == "markdown"):
-        md_file = ctx.new_file("DEPENDENCIES.md")
+        md_file = ctx.actions.declare_file("DEPENDENCIES.md")
         ctx.file_action(output = md_file,
                         content = _md(ctx),
                         executable = True)
