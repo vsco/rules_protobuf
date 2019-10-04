@@ -43,7 +43,7 @@ def _emit_params_file_action(ctx, path, mnemonic, cmds):
     (File): an executable file that runs the command set.
   """
   filename = "%s.%sFile.params" % (path, mnemonic)
-  f = ctx.new_file(ctx.configuration.bin_dir, filename)
+  f = ctx.actions.declare_file(ctx.configuration.bin_dir, filename)
   ctx.file_action(output = f,
                   content = "\n".join(["set -e"] + cmds),
                   executable = True)
@@ -144,7 +144,7 @@ def _build_output_jar(run, builder):
   ctx = run.ctx
   execdir = run.data.execdir
   name = run.lang.name
-  protojar = ctx.new_file("%s_%s.jar" % (run.data.label.name, name))
+  protojar = ctx.actions.declare_file("%s_%s.jar" % (run.data.label.name, name))
   builder["outputs"] += [protojar]
   builder[name + "_jar"] = protojar
   builder[name + "_outdir"] = _get_offset_path(execdir, protojar.path)
@@ -155,7 +155,7 @@ def _build_output_library(run, builder):
   ctx = run.ctx
   execdir = run.data.execdir
   name = run.lang.name
-  jslib = ctx.new_file(run.data.label.name + run.lang.pb_file_extensions[0])
+  jslib = ctx.actions.declare_file(run.data.label.name + run.lang.pb_file_extensions[0])
   builder["jslib"] = [jslib]
   builder["outputs"] += [jslib]
 
@@ -172,8 +172,8 @@ def _build_output_srcjar(run, builder):
   name = run.lang.name
   protojar = builder[name + "_jar"]
   srcjar_name = "%s_%s.srcjar" % (run.data.label.name, name)
-  srcjar = ctx.new_file("%s_%s.srcjar" % (run.data.label.name, name))
-  ctx.action(
+  srcjar = ctx.actions.declare_file("%s_%s.srcjar" % (run.data.label.name, name))
+  ctx.actions.run_shell(
     mnemonic = "CpJarToSrcJar",
     inputs = [protojar],
     outputs = [srcjar],
@@ -216,7 +216,7 @@ def _build_output_files(run, builder):
     for ext in exts:
       temppath = list(path)
       temppath.append(base + ext)
-      pbfile = ctx.new_file("/".join(temppath))
+      pbfile = ctx.actions.declare_file("/".join(temppath))
       builder["outputs"] += [pbfile]
 
     for pb_output in run.pb_outputs:
@@ -224,7 +224,7 @@ def _build_output_files(run, builder):
 
       temppath = list(path)
       temppath.append(pb_output)
-      pbfile = ctx.new_file("/".join(temppath))
+      pbfile = ctx.actions.declare_file("/".join(temppath))
       builder["outputs"] += [pbfile]
 
 
@@ -429,7 +429,7 @@ def _get_external_root(ctx):
   roots = depset(external_roots)
   if (ctx.attr.verbose > 2):
     print("external roots: %r" % roots)
-  n = len(roots)
+  n = len(roots.to_list())
   if n:
     if n > 1:
       fail(
@@ -467,18 +467,18 @@ def _compile(ctx, unit):
   execdir = unit.data.execdir
 
   protoc = _get_offset_path(execdir, unit.compiler.path)
-  imports = ["--proto_path=" + i for i in unit.imports]
+  imports = ["--proto_path=" + i for i in unit.imports.to_list()]
   srcs = [_get_offset_path(execdir, p.path) for p in unit.data.protos]
-  protoc_cmd = [protoc] + list(unit.args) + imports + srcs
-  manifest = [f.short_path for f in unit.outputs]
+  protoc_cmd = [protoc] + unit.args.to_list() + imports + srcs
+  manifest = [f.short_path for f in unit.outputs.to_list()]
 
   transitive_units = depset(transitive = [u.inputs for u in unit.data.transitive_units])
   compiler_dep = depset(direct = [unit.compiler])
 
-  inputs = depset(direct = list(unit.inputs), transitive = [transitive_units, compiler_dep])
-  outputs = list(unit.outputs)
+  inputs = depset(direct = unit.inputs.to_list(), transitive = [transitive_units, compiler_dep])
+  outputs = unit.outputs.to_list()
 
-  cmds = [cmd for cmd in unit.commands] + [" ".join(protoc_cmd)]
+  cmds = [cmd for cmd in unit.commands.to_list()] + [" ".join(protoc_cmd)]
   if execdir != ".":
     cmds.insert(0, "cd %s" % execdir)
 
@@ -524,10 +524,10 @@ cd $(bazel info execution_root)%s && \
   if unit.data.verbose > 3:
     cmds += ["find ../../"]
 
-  ctx.action(
+  ctx.actions.run_shell(
     mnemonic = "ProtoCompile",
     command = " && ".join(cmds),
-    inputs = inputs,
+    tools = inputs,
     outputs = outputs,
   )
 
