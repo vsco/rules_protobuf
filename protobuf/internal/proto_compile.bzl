@@ -429,7 +429,7 @@ def _get_external_root(ctx):
   roots = depset(external_roots)
   if (ctx.attr.verbose > 2):
     print("external roots: %r" % roots)
-  n = len(roots)
+  n = len(roots.to_list())
   if n:
     if n > 1:
       fail(
@@ -467,18 +467,18 @@ def _compile(ctx, unit):
   execdir = unit.data.execdir
 
   protoc = _get_offset_path(execdir, unit.compiler.path)
-  imports = ["--proto_path=" + i for i in unit.imports]
+  imports = ["--proto_path=" + i for i in unit.imports.to_list()]
   srcs = [_get_offset_path(execdir, p.path) for p in unit.data.protos]
-  protoc_cmd = [protoc] + list(unit.args) + imports + srcs
-  manifest = [f.short_path for f in unit.outputs]
+  protoc_cmd = [protoc] + unit.args.to_list() + imports + srcs
+  manifest = [f.short_path for f in unit.outputs.to_list()]
 
   transitive_units = depset(transitive = [u.inputs for u in unit.data.transitive_units])
   compiler_dep = depset(direct = [unit.compiler])
 
-  inputs = depset(direct = list(unit.inputs), transitive = [transitive_units, compiler_dep])
-  outputs = list(unit.outputs)
+  inputs = depset(direct = unit.inputs.to_list(), transitive = [transitive_units, compiler_dep])
+  outputs = unit.outputs.to_list()
 
-  cmds = [cmd for cmd in unit.commands] + [" ".join(protoc_cmd)]
+  cmds = [cmd for cmd in unit.commands.to_list()] + [" ".join(protoc_cmd)]
   if execdir != ".":
     cmds.insert(0, "cd %s" % execdir)
 
