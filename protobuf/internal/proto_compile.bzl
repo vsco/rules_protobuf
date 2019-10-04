@@ -527,7 +527,7 @@ cd $(bazel info execution_root)%s && \
   ctx.actions.run_shell(
     mnemonic = "ProtoCompile",
     command = " && ".join(cmds),
-    inputs = inputs,
+    tools = inputs,
     outputs = outputs,
   )
 
