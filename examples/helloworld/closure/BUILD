@@ -10,6 +10,9 @@ closure_proto_library(
         "//examples/helloworld/proto:protos",
         "//examples/proto:protos",
     ],
+    suppress = [
+        "JSC_TYPE_MISMATCH",
+    ],
     verbose = 0,
 )
 

@@ -30,6 +30,7 @@ def closure_proto_library(
     proto_compile_args = {},
     srcs = [],
     deps = [],
+    suppress = [],
     verbose = 0,
     **kwargs):
 
@@ -62,7 +63,7 @@ def closure_proto_library(
     deps = depset(deps + proto_deps + [
       "@io_bazel_rules_closure//closure/protobuf:jspb",
     ]).to_list(),
-    suppress = [
+    suppress = suppress + [
       "JSC_IMPLICITLY_NULLABLE_JSDOC",
     ],
     **kwargs)
