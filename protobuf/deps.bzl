@@ -1,13 +1,24 @@
 
 BAZEL_SKYLIB_VERSION = "6741f733227dc68137512161a5ce6fcf283e3f58"  # 0.7.0
 
+PROTOBUF_VERSION = "3.10.0"
+
+RULES_PROTO_VERSION = "b0cc14be5da05168b01db282fe93bdf17aa2b9f4"
+
 DEPS = {
 
     "com_google_protobuf": {
         "rule": "http_archive",
-        "url": "https://github.com/protocolbuffers/protobuf/archive/v3.7.1.zip",
-        "strip_prefix": "protobuf-3.7.1",
-        "sha256": "f976a4cd3f1699b6d20c1e944ca1de6754777918320c719742e1674fcf247b7e",
+        "url": "https://github.com/protocolbuffers/protobuf/archive/v%s.zip" % PROTOBUF_VERSION,
+        "strip_prefix": "protobuf-%s" % PROTOBUF_VERSION,
+        "sha256": "33cba8b89be6c81b1461f1c438424f7a1aa4e31998dbe9ed6f8319583daac8c7",
+    },
+
+    "rules_proto": {
+        "rule": "http_archive",
+        "strip_prefix": "rules_proto-%s" % RULES_PROTO_VERSION,
+        "url": "https://github.com/bazelbuild/rules_proto/archive/%s.tar.gz" % RULES_PROTO_VERSION,
+        "sha256": "88b0a90433866b44bb4450d4c30bc5738b8c4f9c9ba14e9661deb123f56a833d",
     },
 
     "bazel_skylib": {
@@ -63,6 +74,6 @@ DEPS = {
         "rule": "bind",
         "actual": "@com_google_protobuf//:protobuf_headers",
     },
-    
+
 
 }
