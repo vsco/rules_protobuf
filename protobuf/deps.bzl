@@ -5,6 +5,10 @@ PROTOBUF_VERSION = "3.10.0"
 
 RULES_PROTO_VERSION = "b0cc14be5da05168b01db282fe93bdf17aa2b9f4"
 
+RULES_PYTHON_VERSION = "4b84ad270387a7c439ebdccfd530e2339601ef27"
+
+RULES_JAVA_VERSION = "981f06c3d2bd10225e85209904090eb7b5fb26bd"
+
 DEPS = {
 
     "com_google_protobuf": {
@@ -19,6 +23,20 @@ DEPS = {
         "strip_prefix": "rules_proto-%s" % RULES_PROTO_VERSION,
         "url": "https://github.com/bazelbuild/rules_proto/archive/%s.tar.gz" % RULES_PROTO_VERSION,
         "sha256": "88b0a90433866b44bb4450d4c30bc5738b8c4f9c9ba14e9661deb123f56a833d",
+    },
+
+    "rules_python": {
+        "rule": "http_archive",
+        "strip_prefix": "rules_python-%s" % RULES_PYTHON_VERSION,
+        "url": "https://github.com/bazelbuild/rules_python/archive/%s.tar.gz" % RULES_PYTHON_VERSION,
+        "sha256": "e5470e92a18aa51830db99a4d9c492cc613761d5bdb7131c04bd92b9834380f6",
+    },
+
+    "rules_java": {
+        "rule": "http_archive",
+        "strip_prefix": "rules_java-%s" % RULES_JAVA_VERSION,
+        "url": "https://github.com/bazelbuild/rules_java/archive/%s.tar.gz" % RULES_JAVA_VERSION,
+        "sha256": "f5a3e477e579231fca27bf202bb0e8fbe4fc6339d63b38ccb87c2760b533d1c3",
     },
 
     "bazel_skylib": {
