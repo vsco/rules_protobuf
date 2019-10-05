@@ -9,6 +9,8 @@ RULES_PYTHON_VERSION = "4b84ad270387a7c439ebdccfd530e2339601ef27"
 
 RULES_JAVA_VERSION = "981f06c3d2bd10225e85209904090eb7b5fb26bd"
 
+RULES_CC_VERSION = "b7fe9697c0c76ab2fd431a891dbb9a6a32ed7c3e"
+
 DEPS = {
 
     "com_google_protobuf": {
@@ -37,6 +39,13 @@ DEPS = {
         "strip_prefix": "rules_java-%s" % RULES_JAVA_VERSION,
         "url": "https://github.com/bazelbuild/rules_java/archive/%s.tar.gz" % RULES_JAVA_VERSION,
         "sha256": "f5a3e477e579231fca27bf202bb0e8fbe4fc6339d63b38ccb87c2760b533d1c3",
+    },
+
+    "rules_cc": {
+        "rule": "http_archive",
+        "strip_prefix": "rules_cc-%s" % RULES_CC_VERSION,
+        "url": "https://github.com/bazelbuild/rules_cc/archive/%s.tar.gz" % RULES_CC_VERSION,
+        "sha256": "29daf0159f0cf552fcff60b49d8bcd4f08f08506d2da6e41b07058ec50cfeaec",
     },
 
     "bazel_skylib": {
