@@ -1,6 +1,5 @@
 package(default_visibility = ["//visibility:public"])
 
-load("//closure:rules.bzl", "closure_proto_library")
 load("//go:rules.bzl", "go_proto_library")
 
 filegroup(
@@ -24,7 +23,6 @@ go_proto_library(
 #     name = "pluriproto",
 #     protos = [":protos"],
 #     langs = [
-#         "//closure",
 #         "//go",
 #     ],
 #     verbose = 2,

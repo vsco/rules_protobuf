@@ -96,7 +96,6 @@ load("@org_pubref_rules_protobuf//protobuf:rules.bzl", "proto_compile")
 proto_compile(
    name = "proto_all",
    langs = [
-     "@org_pubref_rules_protobuf//closure",
      "@org_pubref_rules_protobuf//go",
    ],
    with_grpc = True,

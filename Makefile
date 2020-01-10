@@ -40,8 +40,6 @@ build: external_proto_library_build
 test: test_gogo
 	$(BAZEL_TEST) \
 	//examples/wkt/go:wkt_test \
-	//examples/helloworld/closure:greeter_test \
-
 
 external_proto_library_build:
 	cd tests/external_proto_library && $(BAZEL_BUILD) :go_gapi
@@ -49,7 +47,6 @@ external_proto_library_build:
 fmt:
 	buildifier WORKSPACE
 	buildifier BUILD
-	find closure/ -name BUILD | xargs buildifier
 	find examples/ -name BUILD | xargs buildifier
 	find go/ -name BUILD | xargs buildifier
 	find gogo/ -name BUILD | xargs buildifier
