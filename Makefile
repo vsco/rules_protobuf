@@ -19,7 +19,7 @@ TEST_FLAGS += --test_output=errors
 TEST_FLAGS += --test_strategy=standalone
 TEST_FLAGS += --copt -DGRPC_BAZEL_BUILD # workaorund for building on mac https://github.com/grpc/grpc/pull/13929
 
-BAZEL_BUILD := $(BAZEL) $(STARTFLAGS) $(BAZELFLAGS) build $(BUILDFLAGS)
+BAZEL_BUILD := $(BAZEL) $(STARTFLAGS) $(BAZELFLAGS) build $(BUILD_FLAGS)
 BAZEL_TEST := $(BAZEL) $(STARTFLAGS) $(BAZELFLAGS) test $(TEST_FLAGS)
 #BAZEL_BUILD := $(BAZEL) build
 #BAZEL_TEST := $(BAZEL) test
