@@ -39,21 +39,6 @@ load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 gazelle_dependencies()
 
 # ================================================================
-# closure js_proto_library support requires rules_closure
-# ================================================================
-
-
-git_repository(
-    name = "io_bazel_rules_closure",
-    remote = "https://github.com/bazelbuild/rules_closure",
-    commit = "b3d4ec3879620edcadd3422b161cebb37c59b6c5", # 0.9.0
-)
-
-load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
-
-closure_repositories(omit_com_google_protobuf=True, omit_zlib=True)
-
-# ================================================================
 # Specific Languages Support
 # ================================================================
 

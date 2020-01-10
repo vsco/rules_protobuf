@@ -57,7 +57,6 @@ of this project are to:
 
 | Language                     | Compile <sup>1</sup>  | Build <sup>2</sup> | gRPC <sup>3</sup> |
 | ---------------------------: | -----------: | --------: | -------- |
-| [Closure](closure)           | [closure_proto_compile](closure#closure_proto_compile) | [closure_proto_library](closure#closure_proto_library)          |  |
 | [Go](go)                     | [go_proto_compile](go#go_proto_compile) | [go_proto_library](go#go_proto_library) | [v1.6.0](https://github.com/grpc/grpc-go/releases/tag/v1.6.0) |
 | [Go (gogo)](gogo)            | [gogo_proto_compile](gogo#gogo_proto_compile) | [gogo_proto_library](gogo#gogo_proto_library) | [Nov 2017](https://github.com/gogo/protobuf/commit/616a82ed12d78d24d4839363e8f3c5d3f20627cf) |
 | Custom [proto_language](protobuf#proto_language) | [proto_compile](protobuf#proto_compile) | |  |
@@ -108,7 +107,6 @@ to load before the `*_proto_repositories()` function is invoked:
 
 | Language | Requires |
 | ---:     | :---     |
-| closure_proto_repositories | [rules_closure](https://github.com/bazelbuild/rules_closure) |
 | go_proto_repositories | [rules_go](https://github.com/bazelbuild/rules_go) |
 | gogo_proto_repositories | [rules_go](https://github.com/bazelbuild/rules_go) |
 
@@ -326,7 +324,6 @@ Contributions welcome; please create Issues or GitHub pull requests.
 [protobuf-home]: https://developers.google.com/protocol-buffers/ "Protocol Buffers Developer Documentation"
 [bazel-home]: http://bazel.io "Bazel Homepage"
 [bazel-install]: http://bazel.io/docs/install.html "Bazel Installation"
-[rules_closure]: http://github.com/bazelbuild/rules_closure "Rules Closure"
 [rules_go]: http://github.com/bazelbuild/rules_go "Rules Go"
 [grpc-gateway-home]:https://github.com/grpc-ecosystem/grpc-gateway
 
