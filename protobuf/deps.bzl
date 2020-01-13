@@ -1,7 +1,7 @@
 
 BAZEL_SKYLIB_VERSION = "6741f733227dc68137512161a5ce6fcf283e3f58"  # 0.7.0
 
-PROTOBUF_VERSION = "3.10.0"
+PROTOBUF_VERSION = "3.10.1"
 
 RULES_PROTO_VERSION = "b0cc14be5da05168b01db282fe93bdf17aa2b9f4"
 
@@ -17,7 +17,7 @@ DEPS = {
         "rule": "http_archive",
         "url": "https://github.com/protocolbuffers/protobuf/archive/v%s.zip" % PROTOBUF_VERSION,
         "strip_prefix": "protobuf-%s" % PROTOBUF_VERSION,
-        "sha256": "33cba8b89be6c81b1461f1c438424f7a1aa4e31998dbe9ed6f8319583daac8c7",
+        "sha256": "678d91d8a939a1ef9cb268e1f20c14cd55e40361dc397bb5881e4e1e532679b1",
     },
 
     "rules_proto": {
